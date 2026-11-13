@@ -4,31 +4,56 @@ fetch(url)
     .then((response)=>response.json())
     .then((data)=>{
         
-        afficherTousLesExchanges(data.data)
-        console.log(data.data)
+
+
+        let allExchanges = data.data
+        console.log(allExchanges)
+
+        let  acceptedExchanges = getAcceptedExchanges(allExchanges)
+        afficherTousLesExchanges(acceptedExchanges)
         
+
+        let form = document.forms["formRecherche"]
+
+        form.addEventListener("submit", (event)=>{
+            event.preventDefault()
+            console.log(form.recherche.value)
+            let exchangesRecherche = exchangesData.filter( exchangeData => exchangeData.book.title.toUpperCase().includes(form.recherche.value.toUpperCase()))
+            afficherTousLesExchanges(exchangesRecherche)
+        })
+       
+
+        console.log(form)
 
 
 
         
     })
 
+    function getAcceptedExchanges(allExchanges){
 
-
-    function afficherTousLesExchanges(data){
-        data.forEach((exchange)=>{
+        let acceptedExchanges = []
+        allExchanges.forEach((exchange)=>{
             if(exchange.status=='open'){
-                afficherExchange(exchange)
+                acceptedExchanges.push(exchange)
             }
             
         })
-        
+        return acceptedExchanges
+
+    }
+
+    function afficherTousLesExchanges(acceptedExchanges){
+        exchanges.innerHTML = ''
+        acceptedExchanges.forEach((exchange)=>{           
+                afficherExchange(exchange)                        
+        })        
     }
 
     function afficherExchange(exchange){
         let exchanges = document.getElementById('exchanges')
 
-        // exchanges.innerHTML = ''
+        
         exchanges.innerHTML += `<div class="flex flex-col bg-[#FDFDFB] rounded-xl">
                     <h3 class="bg-[#DAF7D7] p-1 m-2">Echange définitif</h3>
                     <div class="flex flex-row justify-between m-2">
