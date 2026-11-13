@@ -55,7 +55,7 @@ fetch(url)
 
         
         exchanges.innerHTML += `<div class="flex flex-col bg-[#FDFDFB] rounded-xl">
-                    <h3 class="bg-[#DAF7D7] p-1 m-2">Echange définitif</h3>
+                    <h3 class="${getExchangeTypeColors(exchange.exchange_type)} p-1 m-2">${getExchangeType(exchange.exchange_type)}</h3>
                     <div class="flex flex-row justify-between m-2">
                         <div class="flex flex-row">
                             <img src="assets/images/livre1.png" alt="image-livre">
@@ -99,4 +99,22 @@ fetch(url)
         })
         return allTags
 
+    }
+
+    function getExchangeType(exchangeType){
+        if(exchangeType == "temporary"){
+            return "Echange temporaire"
+        }
+        if(exchangeType == "permanent"){
+            return "Echange définitif"
+        }
+    }
+
+    function getExchangeTypeColors(exchangeType){
+        if(exchangeType == "temporary"){
+            return "text-[#CDA85A] bg-[#FFF3CE]"
+        }
+        if(exchangeType == "permanent"){
+            return "text-[#5D9C62] bg-[#DAF6DE]"
+        }
     }
