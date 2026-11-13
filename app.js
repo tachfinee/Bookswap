@@ -9,7 +9,13 @@ fetch(url)
         let allExchanges = data.data
         console.log(allExchanges)
 
+        
+
         let  acceptedExchanges = getAcceptedExchanges(allExchanges)
+
+        afficherRecherche(acceptedExchanges)
+
+
         afficherTousLesExchanges(acceptedExchanges)
         
 
@@ -23,12 +29,38 @@ fetch(url)
         })
        
 
-        console.log(form)
+       
 
 
 
         
     })
+
+    function afficherRecherche(acceptedExchanges){
+        let recherche = document.getElementById('recherche')
+        recherche.innerHTML +=`<form name="formRecherche">
+                <label for="recherche">Rechercher</label><br>
+                <input class="border rounded-lg" type="text" id="recherche" name="recherche">                
+                <label for="category-select">Catégorie</label>
+                <select name="categories" id="category-select">
+                    <option value="toutesCategories"> Toutes les catégories </option>
+                    ${getCategory(acceptedExchanges)}
+                </select>
+                <input class="bg-blue-500 p-1 rounded-xl" type="submit" value="Actualiser">
+            </form>`
+    }
+
+    function getCategory(acceptedExchanges){
+        let categories = []
+        let options=''
+        acceptedExchanges.forEach(acceptedExchange => {
+
+            options+= `<option value="${acceptedExchange.book.category.slug}"> ${acceptedExchange.book.category.name} </option>`
+        })
+        return options
+    }
+
+
 
     function getAcceptedExchanges(allExchanges){
 
