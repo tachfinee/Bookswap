@@ -7,7 +7,9 @@ fetch(url)
         afficherTousLesExchanges(data.data)
         console.log(data.data)
         
-        
+
+
+
         
     })
 
@@ -15,7 +17,10 @@ fetch(url)
 
     function afficherTousLesExchanges(data){
         data.forEach((exchange)=>{
-            afficherExchange(exchange)
+            if(exchange.status=='open'){
+                afficherExchange(exchange)
+            }
+            
         })
         
     }
@@ -23,36 +28,50 @@ fetch(url)
     function afficherExchange(exchange){
         let exchanges = document.getElementById('exchanges')
 
+        // exchanges.innerHTML = ''
         exchanges.innerHTML += `<div class="flex flex-col bg-[#FDFDFB] rounded-xl">
-                    <h3 class="bg-[#DAF7D7] p-1 m-1">Echange définitif</h3>
-                    <div class="flex flex-row justify-between">
+                    <h3 class="bg-[#DAF7D7] p-1 m-2">Echange définitif</h3>
+                    <div class="flex flex-row justify-between m-2">
                         <div class="flex flex-row">
                             <img src="assets/images/livre1.png" alt="image-livre">
                             <div>
                                 <h3>${exchange.book.title}</h3>
-                                <h4>auteur</h4>
+                                <h4>${exchange.book.author}</h4>
+                                <p class="text-[#8D80D0] bg-[#E6E4FC] rounded-lg p-1 text-xs">${exchange.book.category.name}</p>
+                                <span class="flex flex-row">
+                                    ${getTag(exchange.book.tags)}
+                                    
+                                </span>
                             </div>
                         </div>
                         <div class="flex flex-row">
-                            <img src="assets/images/livre2.png" alt="image-livre">
+                            <img class="image" src="assets/images/livre2.png" alt="image-livre">
                             <div class="m-1">
-                                <h3>${exchange.offers[0].id}</h3>
-                                <h4>auteur</h4>
-                                <p class="text-[#8D80D0] bg-[#E6E4FC] rounded-lg p-1 text-xs">Développement</p>
+                                <h3 class="booktwo">${exchange.offers[0].offered_book.title}</h3>
+                                <h4>${exchange.offers[0].offered_book.author}</h4>
+                                <p class="text-[#8D80D0] bg-[#E6E4FC] rounded-lg p-1 text-xs">${exchange.offers[0].offered_book.category.name}</p>
                                 <span class="flex flex-row">
-                                    <p class="bg-[#F1F2F9] p-1 m-1 rounded-lg">#code</p>
-                                    <p class="bg-[#F1F2F9] p-1 m-1 rounded-lg">#qualité</p>
+                                    ${getTag(exchange.offers[0].offered_book.tags)}
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-row justify-between">
-                        <div class="flex flex-row">
-                            <img src="" alt="image user">
-                            <p>Mehdi Berrada</p>
+                    <div class="flex flex-row justify-between m-2">
+                        <div class="flex flex-row items-center">
+                            <img src="assets/images/profil.png" width="55" alt="image user">
+                            <p>${exchange.book.owner.name}</p>
                         </div>
                         <a href="" class="text-[#8D80D0] bg-[#E6E4FC] rounded-lg m-2 p-2">Voir les détails</a>
                     </div>
 
                 </div>`
+    }
+
+    function getTag(tags){
+        let allTags = ''
+        tags.forEach(tag=>{
+            allTags += `<p class="bg-[#F1F2F9] p-1 m-1 rounded-lg">#${tag}</p>`
+        })
+        return allTags
+
     }
