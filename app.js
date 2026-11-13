@@ -17,8 +17,8 @@ fetch(url)
 
         form.addEventListener("submit", (event)=>{
             event.preventDefault()
-            console.log(form.recherche.value)
-            let exchangesRecherche = exchangesData.filter( exchangeData => exchangeData.book.title.toUpperCase().includes(form.recherche.value.toUpperCase()))
+            
+            let exchangesRecherche = acceptedExchanges.filter( exchangeData => exchangeData.book.title.toUpperCase().includes(form.recherche.value.toUpperCase()) || exchangeData.offers[0].offered_book.title.toUpperCase().includes(form.recherche.value.toUpperCase()))
             afficherTousLesExchanges(exchangesRecherche)
         })
        
