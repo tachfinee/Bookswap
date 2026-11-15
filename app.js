@@ -24,7 +24,7 @@ fetch(url)
         form.addEventListener("submit", (event)=>{
             event.preventDefault()
             
-            let exchangesRecherche = acceptedExchanges.filter( exchangeData => (exchangeData.book.title.toUpperCase().includes(form.recherche.value.toUpperCase()) || exchangeData.offers[0].offered_book.title.toUpperCase().includes(form.recherche.value.toUpperCase()) ) && (exchangeData.book.category.slug == form.categories.value ||exchangeData.offers[0].offered_book.category.slug == form.categories.value ) )
+            let exchangesRecherche = acceptedExchanges.filter( exchangeData => (exchangeData.book.title.toUpperCase().includes(form.recherche.value.toUpperCase()) || exchangeData.offers[0].offered_book.title.toUpperCase().includes(form.recherche.value.toUpperCase()) ) && (exchangeData.book.category.slug == form.categories.value ||exchangeData.offers[0].offered_book.category.slug == form.categories.value ) || form.categories.value == "toutesCategories")
             afficherTousLesExchanges(exchangesRecherche)
         })
        
