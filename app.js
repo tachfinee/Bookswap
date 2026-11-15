@@ -51,12 +51,38 @@ fetch(url)
     }
 
     function getCategory(acceptedExchanges){
-        let categories = []
         let options=''
+        let categoriesDupliquees = []
         acceptedExchanges.forEach(acceptedExchange => {
+            categoriesDupliquees.push(
+                {
+                    slug : acceptedExchange.book.category.slug,
+                    name :acceptedExchange.book.category.name
+                }
+            )
 
-            options+= `<option value="${acceptedExchange.book.category.slug}"> ${acceptedExchange.book.category.name} </option>`
+
+
+
         })
+
+                    
+
+        
+        let categoriesNonDupliquees =categoriesDupliquees.filter((categorie,index)=>
+            index == categoriesDupliquees.findIndex(cat => cat.slug == categorie.slug)
+        )
+                    
+
+        categoriesNonDupliquees.forEach(categorie=>{
+            options+= `<option value="${categorie.slug}"> ${categorie.name} </option>`
+
+        })
+        
+        
+
+
+        
         return options
     }
 
